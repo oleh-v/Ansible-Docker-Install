@@ -1,0 +1,17 @@
+---
+#
+#
+
+# This file defines the variables that will be used when performing the entire Playbook.
+# Change the values you need.
+
+#########!!!EDIT!!!#####################
+#                                      #
+#                                      #
+
+docker_compose_version: 1.22.0
+docker_compose_path: /usr/local/bin/docker-compose
+
+#                                      #
+#                                      #
+#########!!!EDIT!!!#####################
