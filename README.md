@@ -11,7 +11,7 @@ ssh-copy-id root_user@target.server.com
 ```
 
 ## Usage
-* In ./ansible.cfg - check path to your private key and username
+* In ./ansible.cfg - check path to your private key and username 
 * In ./group_vars/target - change the values you need
 * In ./hosts - define Hostname or IP of target servers
 * Run Playbook:
