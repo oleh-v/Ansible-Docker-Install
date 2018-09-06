@@ -2,7 +2,9 @@
 # Install Docker-CE
 
 - name: Uninstall old versions if exists
-  apt: name={{ item }} state=absent
+  apt:
+    name: "{{ item }}"
+    state: absent
   loop:
     - docker-ce
     - docker
@@ -10,10 +12,13 @@
     - docker.io
 
 - name: Run "apt-get update"
-  apt: update_cache=yes
+  apt:
+    update_cache: yes
 
 - name: Install packages to allow apt to use a repository over HTTPS
-  apt: name={{ item }} state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   loop:
     - apt-transport-https
     - ca-certificates
@@ -25,15 +30,22 @@
 
 - name: Add docker stable repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable state=present
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+    state: present
 
 - name: Run "apt-get update"
-  apt: update_cache=yes
+  apt:
+    update_cache: yes
   
 - name: Install Docker CE
-  apt: name={{ item }} state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   loop:
     - docker-ce
 
 - name: Enable and Start Docker service
-  service: name=docker state=started enabled=yes
+  service:
+    name: docker
+    state: started
+    enabled: yes

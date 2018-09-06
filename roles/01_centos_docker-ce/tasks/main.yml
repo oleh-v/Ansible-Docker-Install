@@ -2,7 +2,9 @@
 # Install Docker-CE
 
 - name: Uninstall old versions if exists
-  yum: name={{ item }} state=absent
+  yum:
+    name: "{{ item }}"
+    state: absent
   loop:
     - docker
     - docker-client
@@ -15,28 +17,33 @@
     - docker-engine-selinux
     - docker-engine
 
-
 - name: Install required packages
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   loop:
     - yum-utils
     - device-mapper-persistent-data
     - lvm2
 
-- name: Add Docker-CE stable repo
-  yum_repository:
-    name: docker-ce-stable
-    description: Docker CE Stable Repo
-    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-    gpgcheck: no
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+  become: yes
 
 - name: yum update
   action: yum name=* state=latest
 
 - name: Install Docker CE
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   loop:
     - docker-ce
 
 - name: Enable and Start Docker service
-  service: name=docker state=started enabled=yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
