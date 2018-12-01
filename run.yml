@@ -1,0 +1,26 @@
+---
+# This playbook install docker and docker-compose to the target server.
+
+- hosts: localhost
+  become: yes
+  gather_facts: no
+
+  vars_prompt:
+  - name: target_machine
+    prompt: Please enter IP (or hostname) of target machine
+    private: no
+
+  tasks:
+    - add_host:
+        name: "{{ target_machine }}"
+        groups: dynamically_created_hosts
+
+- name: INSTALL DOCKER-CE and DOCKER-COMPOSE
+  hosts: dynamically_created_hosts
+  remote_user: root
+
+  roles:
+    - 00_preparing
+    - { role: 01_centos_docker-ce, when: ansible_distribution == "CentOS" }
+    - { role: 01_ubuntu_docker-ce, when: ansible_distribution == "Ubuntu" }
+    - 02_docker-compose

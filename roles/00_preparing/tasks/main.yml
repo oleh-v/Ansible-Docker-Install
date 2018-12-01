@@ -2,5 +2,5 @@
 # Get OS version of target server
 
 - name: Check OS version of target server
-  debug:
+  debug: 
     var: ansible_distribution
